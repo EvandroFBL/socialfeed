@@ -1,0 +1,67 @@
+.post {
+    background: Var(--gray-800);
+    border-radius: 8px;
+    padding: 2.5rem;
+}
+
+.post + .post {
+    margin-top: 1.5rem;
+}
+
+.post > header {
+    display: flex;
+    flex-direction: row;align-items: center;
+    justify-content: space-between;
+}
+
+.post > header time {
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.authorAvatar {
+    width: calc(3rem + 12px);
+    height: calc(3rem + 12px);
+    border-radius: 8px;
+    border: 4px solid var(--gray-800);
+    outline: 2px solid var(--green-500);
+}
+
+.authorInfo strong {
+    display: block;
+    color: var(--gray-100);
+    line-height: 1.6;
+}
+
+.authorInfo span {
+    display: block;
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+.content p {
+    margin-top: 1rem;
+    color: var(--gray-300);
+}
+
+.content a {
+    color: var(--green-500);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.content a:hover {
+    color: var(--green-300);
+}
