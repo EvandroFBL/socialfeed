@@ -28,8 +28,13 @@ export function Post({ author, content, publishedAt }) {
         setNewComment("");
     }
 
-    function handleNewCommentChange () {
+    function handleNewCommentChange() {
+        event.target.setCustomValidity("");
         setNewComment(event.target.value);
+    }
+
+    function handleNewCommentInvalid() {
+        event.target.setCustomValidity("Comment cannot be empty!");
     }
 
     function handleDeleteComment(commentToDelete) {
@@ -38,6 +43,8 @@ export function Post({ author, content, publishedAt }) {
         });
         setComments(commentsWithoutDeleteOne);
     }
+
+    const isCommentEmpty = newComment.length === 0;
 
     return (
         <article className={styles.post}>
@@ -69,12 +76,16 @@ export function Post({ author, content, publishedAt }) {
                 <strong>Leave your feedback</strong>
                 <textarea
                     name="comment"
-                    onChange={handleNewCommentChange}
-                    value={newComment}
                     placeholder="Write your feedback..."
+                    value={newComment}
+                    onChange={handleNewCommentChange}
+                    onInvalid={handleNewCommentInvalid}
+                    required
                 />
                 <footer>
-                    <button type="submit">Post</button>
+                    <button type="submit" disabled={isCommentEmpty}>
+                        Post
+                    </button>
                 </footer>
             </form>
 
