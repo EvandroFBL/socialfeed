@@ -12,6 +12,7 @@ export function Post({ author, content, publishedAt }) {
     ]);
 
     const [newComment, setNewComment] = useState("");
+
     // const publishedDateFormartedBr = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
     //     locale: ptBR,
     // });
@@ -21,7 +22,7 @@ export function Post({ author, content, publishedAt }) {
     const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {addSuffix: true});
 
     function handleFormSubmit() {
-        event.preventDefault()
+        event.preventDefault();
 
         setComments([...comments, newComment]);
         setNewComment("");
@@ -31,6 +32,12 @@ export function Post({ author, content, publishedAt }) {
         setNewComment(event.target.value);
     }
 
+    function handleDeleteComment(commentToDelete) {
+        const commentsWithoutDeleteOne = comments.filter(comment => {
+            return comment !== commentToDelete;
+        });
+        setComments(commentsWithoutDeleteOne);
+    }
 
     return (
         <article className={styles.post}>
@@ -73,7 +80,13 @@ export function Post({ author, content, publishedAt }) {
 
             <div className={styles.postCommentList}>
                 {comments.map(comment => {
-                    return <Comment key={comment} content={comment} />
+                    return (
+                        <Comment 
+                            key={comment} 
+                            content={comment}
+                            onDeleteComment={handleDeleteComment}
+                        />
+                    )
                 })}
             </div>
         </article>
