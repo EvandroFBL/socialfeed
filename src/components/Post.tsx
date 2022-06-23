@@ -4,40 +4,53 @@ import ptBR from "date-fns/locale/pt-BR";
 import styles from  "./Post.module.css";
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 
-export function Post({ author, content, publishedAt }) {
+export interface PostProps {
+    author: {
+        name: string;
+        role: string;
+        avatarUrl: string;
+    },
+    publishedAt: Date;
+    content: {
+        type: "paragraph" | "link";
+        content: string;
+    }[];
+}
+
+export function Post({ author, content, publishedAt }: PostProps) {
     const [comments, setComments] = useState([
         "Very good!"
     ]);
 
     const [newComment, setNewComment] = useState("");
 
-    // const publishedDateFormartedBr = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+    // const publishedDateFormattedBr = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
     //     locale: ptBR,
     // });
     // const publishedDateRelativeToNowBr = formatDistanceToNow(publishedAt, {locale: ptBR, addSuffix: true});
 
-    const publishedDateFormated = format(publishedAt, "LLLL d 'at' HH:mm");
+    const publishedDateFormatted = format(publishedAt, "LLLL d 'at' HH:mm");
     const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {addSuffix: true});
 
-    function handleFormSubmit() {
+    function handleFormSubmit(event: FormEvent) {
         event.preventDefault();
 
         setComments([...comments, newComment]);
         setNewComment("");
     }
 
-    function handleNewCommentChange() {
+    function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity("");
         setNewComment(event.target.value);
     }
 
-    function handleNewCommentInvalid() {
+    function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity("Comment cannot be empty!");
     }
 
-    function handleDeleteComment(commentToDelete) {
+    function handleDeleteComment(commentToDelete: string) {
         const commentsWithoutDeleteOne = comments.filter(comment => {
             return comment !== commentToDelete;
         });
@@ -57,7 +70,7 @@ export function Post({ author, content, publishedAt }) {
                     </div>
                 </div>
 
-                <time title={publishedDateFormated} dateTime={publishedAt.toISOString()}>
+                <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
                     {publishedDateRelativeToNow}
                 </time>
             </header>

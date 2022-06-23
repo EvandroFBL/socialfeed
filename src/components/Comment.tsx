@@ -3,7 +3,12 @@ import { useState } from "react";
 import { Avatar } from "./Avatar";
 import styles from  "./Comment.module.css"
 
-export function Comment({ content, onDeleteComment }) {
+interface CommentProps {
+    content: string;
+    onDeleteComment: (content: string) => void;
+}
+
+export function Comment({ content, onDeleteComment }: CommentProps) {
     const [cheerCount, setCheerCount] = useState(0);
 
     function handleDeleteAction() {
