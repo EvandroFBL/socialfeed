@@ -6,6 +6,10 @@ import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 
+interface Content {
+    type: "paragraph" | "link";
+    content: string;
+}
 export interface PostProps {
     author: {
         name: string;
@@ -13,17 +17,11 @@ export interface PostProps {
         avatarUrl: string;
     },
     publishedAt: Date;
-    content: {
-        type: "paragraph" | "link";
-        content: string;
-    }[];
+    content: Content[];
 }
 
 export function Post({ author, content, publishedAt }: PostProps) {
-    const [comments, setComments] = useState([
-        "Very good!"
-    ]);
-
+    const [comments, setComments] = useState<string[]>([]);
     const [newComment, setNewComment] = useState("");
 
     // const publishedDateFormattedBr = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
